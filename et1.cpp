@@ -18,9 +18,12 @@ void Paleta::inicializarPaleta(){
    
 }
 
-void Paleta::lerCoresArquivo(){
 
-     ifstream arqCores("cores.txt");
+void Paleta::lerCoresArquivo(string arq){
+
+   
+
+     ifstream arqCores(arq);
      int n;
       arqCores >> n;
       quantidade = n;

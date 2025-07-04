@@ -1,14 +1,18 @@
 #include <iostream>
-
 #include "et1.h"
-using namespace std;
+#include "et2.h"
+
+
+
 
 int main(){
     
-    Paleta p1;
-    p1.lerCoresArquivo();
+    Imagem img(10,15);
+     Paleta p1;
+    
+     p1.lerCoresArquivo("cores.txt");
+    
 
-   
 
    
     return 0;

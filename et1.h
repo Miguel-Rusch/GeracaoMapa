@@ -1,3 +1,5 @@
+#include <iostream>
+using namespace std;
 #ifndef ET1_H
 #define ET1_H
 
@@ -15,7 +17,7 @@ class Paleta {
     int valores[100];// Armazena os valores que se conectam com as cores
 
     void inicializarPaleta();
-    void lerCoresArquivo();
+    void lerCoresArquivo(string arq);
 };
 
 

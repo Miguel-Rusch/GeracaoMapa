@@ -1,7 +1,8 @@
-#include <iostream>
-using namespace std;
 #ifndef ET1_H
 #define ET1_H
+#include <iostream>
+using namespace std;
+
 
 class Cor {       
   public:            

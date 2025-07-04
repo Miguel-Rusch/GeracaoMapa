@@ -1,10 +1,11 @@
+#ifndef ET2_H
+#define ET2_H
 #include <iostream>
 #include "et1.h"
 
 using namespace std;
 
-#ifndef ET2_H
-#define ET2_H
+
 //tentar puxar do et1.h 
 
 
@@ -19,25 +20,26 @@ class Imagem {
 
 
    //enteder essa parte melhor
-   Imagem(int largura,int altura){
-
-    mapa  = new Cor*[largura];
-    for(int i = 0; i < largura;i++){
+  Imagem(int largura, int altura) {
+    this->largura = largura;
+    this->altura = altura;
+    mapa = new Cor*[largura];
+    for (int i = 0; i < largura; ++i) {
         mapa[i] = new Cor[altura];
     }
-   }
+}
 
-   Imagem(){
-    for(int i = 0; i < largura;i++){
-        delete mapa[i];
+~Imagem() {
+    for (int i = 0; i < largura; ++i) {
+        delete[] mapa[i];
     }
-    delete mapa;
-   }
+    delete[] mapa;
+}
    
 
    //definir dunções
 
-   void encotrarPixel(int x,int y);
+   string encotrarPixel(int x,int y);
 
    void definirPixel(int x,int y,Cor c);
 

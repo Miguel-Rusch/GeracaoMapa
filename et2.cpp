@@ -36,12 +36,12 @@ void Imagem::salvarFormatoPPM(string nomeArq){
 
     for(int i = 0; i < altura; i++){
         for(int j = 0; j < largura;j++){
-            cout << encotrarPixel(i,j) << " ";
+            //cout << encotrarPixel(i,j) << " ";
             arquivoPPM << encotrarPixel(i,j) << " ";
 
         }
             arquivoPPM << endl;
-            cout << endl;
+            //cout << endl;
         
     }
 

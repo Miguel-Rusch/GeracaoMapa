@@ -47,7 +47,7 @@ int MapaAltura::mediaSquare(int x,int y,int deslocamento){
 
 void MapaAltura::gerarAltura(){
     vector<Ponto> pontosDefinidos;
-
+    srand(20);
 
     //4 cantos
     mapaComAltura[0][0] = rand()%100;
@@ -156,7 +156,48 @@ void MapaAltura::gerarAltura(){
 }
 
 
+int  MapaAltura::altura_cordenada(int x,int y){
+    return mapaComAltura[x][y];
+}
 
+int MapaAltura::pegarTamanho(){
+    return tamanho;
+}
+
+void MapaAltura::salvarMatrizArquivo(string arq){
+        
+    ofstream arquivoPPM;
+
+    arquivoPPM.open(arq);
+    
+    
+     int n = tamanho;
+
+     arquivoPPM << n << endl;
+   
+    for(int i = 0;i < n;i++){
+        for(int j = 0; j < n; j++){
+            arquivoPPM << mapaComAltura[i][j] << " ";
+        }
+            arquivoPPM << endl;
+    }
+      
+     
+
+   
+     arquivoPPM.close();
+}
+
+void MapaAltura::lerMatrizArquivo(string arq){
+         ifstream arqMapaTxt(arq);
+
+         int novoTamanho;
+          arqMapaTxt >> novoTamanho;
+
+          tamanho = novoTamanho;
+
+          
+}
 
 
 

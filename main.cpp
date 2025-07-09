@@ -25,15 +25,18 @@ int main(){
 
     ma.gerarAltura();
 
-    
+    int tamanho = ma.pegarTamanho();
 
-     for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
+     for (int i = 0; i < tamanho; i++) {
+        for (int j = 0; j < tamanho; j++) {
             cout << setw(4) << ma.mapaComAltura[i][j]; // 4 espaços para alinhamento (3 dígitos + espaço)
         }
         cout << endl;
     }
 
+    cout << ma.altura_cordenada(8,0);
+
+    ma.salvarMatrizArquivo("qe.txt");
    
     return 0;
 }

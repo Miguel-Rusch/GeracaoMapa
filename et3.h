@@ -17,6 +17,9 @@ class MapaAltura{
     int elevado;//2^n -1 == tamanho
     int rugosidade;
     
+    int mediaSquare(int x, int y, int deslocamento);
+
+    bool defini(int x, int y, int deslocamento);
 
     public:
     int **mapaComAltura;
@@ -52,9 +55,7 @@ class MapaAltura{
 
     void lerMatrizArquivo(string arq);
     //funcoes auxiliares
-    int mediaSquare(int x, int y, int deslocamento);
-
-    bool defini(int x, int y, int deslocamento);
+   
 };
 
 

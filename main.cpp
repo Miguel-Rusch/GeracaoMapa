@@ -9,9 +9,9 @@
 int main(){
     
     // Imagem img(3,2);
-    //  Paleta p1;
+    Paleta p1;
     
-    //  p1.lerCoresArquivo("cores.txt");
+    p1.lerCoresArquivo("cores.txt");
 
     
     // img.definirPixel(0,0,{255,255,225});
@@ -20,11 +20,11 @@ int main(){
     
     // img.salvarFormatoPPM("a.ppm");
 
-    MapaAltura ma(3,0);
+    MapaAltura ma(1,0);
 
 
     ma.gerarAltura();
-
+    //ma.lerMatrizArquivo("qe.txt");
     int tamanho = ma.pegarTamanho();
 
      for (int i = 0; i < tamanho; i++) {
@@ -34,9 +34,10 @@ int main(){
         cout << endl;
     }
 
-    cout << ma.altura_cordenada(8,0);
+   // cout << ma.altura_cordenada(8,0);
 
-    ma.salvarMatrizArquivo("qe.txt");
+    ma.salvarMatrizArquivo("que.txt");
+    ma.criarImagem(p1, "a.ppm");
    
     return 0;
 }

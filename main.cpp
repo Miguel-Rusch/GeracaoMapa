@@ -11,7 +11,7 @@ int main(){
     // Imagem img(3,2);
     Paleta p1;
     
-    p1.lerCoresArquivo("cores.txt");
+    p1.lerCoresArquivo("p300.txt");
 
     
     // img.definirPixel(0,0,{255,255,225});
@@ -20,7 +20,7 @@ int main(){
     
     // img.salvarFormatoPPM("a.ppm");
 
-    MapaAltura ma(9,5);
+    MapaAltura ma(9,25);
 
 
     ma.gerarAltura();

@@ -43,26 +43,23 @@ int MapaAltura::mediaSquare(int x, int y, int deslocamento)
         i++;
     }
 
-    
     // cout << i << endl;
     
 
     return medi / i;
 }
 
-
 void MapaAltura::gerarAltura()
 {
     vector<Ponto> pontosDefinidos;
-    srand(25);
-    float dura = 0.9;
-    int alturaMaximaPossivel = 250;
-   
+    srand(545);
+    int numeroAleato = 3;
+
     // 4 cantos
-    mapaComAltura[0][0] = rand() % alturaMaximaPossivel ;
-    mapaComAltura[0][tamanho - 1] = rand() % alturaMaximaPossivel ;
-    mapaComAltura[tamanho - 1][0] =  rand() % alturaMaximaPossivel ;
-    mapaComAltura[tamanho - 1][tamanho - 1] = rand() % alturaMaximaPossivel  ;
+    mapaComAltura[0][0] = rand()%100;
+    mapaComAltura[0][tamanho - 1] = rand()%100;
+    mapaComAltura[tamanho - 1][0] =  rand()%100;
+    mapaComAltura[tamanho - 1][tamanho - 1] = rand()%100;
 
     pontosDefinidos.push_back({0, 0});
     int deslocamento = (tamanho - 1) / 2;
@@ -93,11 +90,13 @@ void MapaAltura::gerarAltura()
             squareY = coluna;
 
             int media = (mapaComAltura[sqareX - deslocamento][squareY - deslocamento] +
-                         mapaComAltura[sqareX - deslocamento][squareY + deslocamento] + 
-                         mapaComAltura[sqareX + deslocamento][squareY - deslocamento] +
-                         mapaComAltura[sqareX + deslocamento][squareY + deslocamento] + rugosidade) /
+                         mapaComAltura[sqareX - deslocamento][squareY + deslocamento] + mapaComAltura[sqareX + deslocamento][squareY - deslocamento] +
+                         mapaComAltura[sqareX + deslocamento][squareY + deslocamento]) /
                         4;
-            media += ((random()%33)-16)*rugosidade;
+            media += ((rand() % (2*numeroAleato)) - numeroAleato)*rugosidade;
+            if(media < 0){media =1;}
+            if(media > 100){media = 99;}
+
             mapaComAltura[sqareX][squareY] = media;
             if (defini(sqareX, squareY, deslocamento))
             {
@@ -107,8 +106,15 @@ void MapaAltura::gerarAltura()
             // caso 2
             sqareX = linha;
             squareY = coluna - deslocamento;
-
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
+            media = mediaSquare(sqareX, squareY, deslocamento) + ((rand() % (2*numeroAleato)) - numeroAleato)*rugosidade;
+            if(media < 0){
+                media =1;
+                }
+            if(media > 100){
+                media = 100;
+            }
+            mapaComAltura[sqareX][squareY]  = media;
+           
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -118,7 +124,15 @@ void MapaAltura::gerarAltura()
             sqareX = linha + deslocamento;
             squareY = coluna;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
+            media = mediaSquare(sqareX, squareY, deslocamento) + ((rand() % (2*numeroAleato)) - numeroAleato)*rugosidade;
+            if(media < 0){
+                media =1;
+                }
+            if(media > 100){
+                media = 100;
+            }
+            mapaComAltura[sqareX][squareY]  = media;
+            
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -128,7 +142,15 @@ void MapaAltura::gerarAltura()
             sqareX = linha - deslocamento;
             squareY = coluna;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
+            media = mediaSquare(sqareX, squareY, deslocamento) + ((rand() % (2*numeroAleato)) - numeroAleato)*rugosidade;
+            if(media < 0){
+                media =1;
+                }
+            if(media > 100){
+                media = 100;
+            }
+            mapaComAltura[sqareX][squareY]  = media;
+            
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -138,14 +160,23 @@ void MapaAltura::gerarAltura()
             sqareX = linha;
             squareY = coluna + deslocamento;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
+            media = mediaSquare(sqareX, squareY, deslocamento) + ((rand() % (2*numeroAleato)) - numeroAleato)*rugosidade;
+            if(media < 0){
+                media =25;
+                }
+            if(media > 100){
+                media = 25;
+            }
+            mapaComAltura[sqareX][squareY]  = media;
+
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
             }
         }
-        rugosidade = rugosidade*dura;
+
         deslocamento = deslocamento / 2;
+        rugosidade *= 0.5;
         if (deslocamento == 0)
             break;
     }
@@ -237,24 +268,10 @@ void MapaAltura::criarImagem(Paleta paleta, string arq){
 
 Cor MapaAltura::tranformarAlturaCor(Paleta paleta, int alt){
     //da para otimizar muito 
-     
-
-    int guardarValor = -1;
-  
-    for(int i = 0; i < paleta.quantidade;i++){
-        if(paleta.valores[i] == alt){
-            guardarValor = alt;
+  for (int i = 0; i < paleta.quantidade - 1; i++) {
+        if (alt >= paleta.valores[i] && alt < paleta.valores[i + 1]) {
+            return paleta.cores[i];
         }
     }
-    if(alt > paleta.quantidade){
-        guardarValor = paleta.valores[paleta.quantidade-2];
-    }
-    if(alt < 0){
-        guardarValor = 2;
-    }
-    if(!(guardarValor > 1 || guardarValor < 255)){
-        guardarValor = 123;
-    }
-   
-    return paleta.cores[guardarValor+1];
+    return paleta.cores[paleta.quantidade - 1]; // última cor para valores altos
 }

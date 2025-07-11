@@ -20,7 +20,7 @@ int main(){
     
     // img.salvarFormatoPPM("a.ppm");
 
-    MapaAltura ma(1,0);
+    MapaAltura ma(9,5);
 
 
     ma.gerarAltura();

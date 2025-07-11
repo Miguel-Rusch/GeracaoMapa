@@ -23,6 +23,7 @@ void Paleta::lerCoresArquivo(string arq)
    int n;
    arqCores >> n;
    quantidade = n;
+   
 
    for (int i = 0; i < n; i++)
    {
@@ -30,6 +31,7 @@ void Paleta::lerCoresArquivo(string arq)
       arqCores >> cores[i].R;
       arqCores >> cores[i].G;
       arqCores >> cores[i].B;
+      
    }
 
    arqCores.close();

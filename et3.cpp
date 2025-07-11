@@ -43,22 +43,26 @@ int MapaAltura::mediaSquare(int x, int y, int deslocamento)
         i++;
     }
 
+    
     // cout << i << endl;
-    medi = medi + rugosidade;
+    
 
     return medi / i;
 }
 
+
 void MapaAltura::gerarAltura()
 {
     vector<Ponto> pontosDefinidos;
-    srand(20);
-
+    srand(25);
+    float dura = 0.9;
+    int alturaMaximaPossivel = 250;
+   
     // 4 cantos
-    mapaComAltura[0][0] = 2;
-    mapaComAltura[0][tamanho - 1] = 1;
-    mapaComAltura[tamanho - 1][0] =  3;
-    mapaComAltura[tamanho - 1][tamanho - 1] = 3;
+    mapaComAltura[0][0] = rand() % alturaMaximaPossivel ;
+    mapaComAltura[0][tamanho - 1] = rand() % alturaMaximaPossivel ;
+    mapaComAltura[tamanho - 1][0] =  rand() % alturaMaximaPossivel ;
+    mapaComAltura[tamanho - 1][tamanho - 1] = rand() % alturaMaximaPossivel  ;
 
     pontosDefinidos.push_back({0, 0});
     int deslocamento = (tamanho - 1) / 2;
@@ -89,10 +93,11 @@ void MapaAltura::gerarAltura()
             squareY = coluna;
 
             int media = (mapaComAltura[sqareX - deslocamento][squareY - deslocamento] +
-                         mapaComAltura[sqareX - deslocamento][squareY + deslocamento] + mapaComAltura[sqareX + deslocamento][squareY - deslocamento] +
+                         mapaComAltura[sqareX - deslocamento][squareY + deslocamento] + 
+                         mapaComAltura[sqareX + deslocamento][squareY - deslocamento] +
                          mapaComAltura[sqareX + deslocamento][squareY + deslocamento] + rugosidade) /
                         4;
-
+            media += ((random()%33)-16)*rugosidade;
             mapaComAltura[sqareX][squareY] = media;
             if (defini(sqareX, squareY, deslocamento))
             {
@@ -103,7 +108,7 @@ void MapaAltura::gerarAltura()
             sqareX = linha;
             squareY = coluna - deslocamento;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento);
+            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -113,7 +118,7 @@ void MapaAltura::gerarAltura()
             sqareX = linha + deslocamento;
             squareY = coluna;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento);
+            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -123,7 +128,7 @@ void MapaAltura::gerarAltura()
             sqareX = linha - deslocamento;
             squareY = coluna;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento);
+            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
@@ -133,13 +138,13 @@ void MapaAltura::gerarAltura()
             sqareX = linha;
             squareY = coluna + deslocamento;
 
-            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento);
+            mapaComAltura[sqareX][squareY] = mediaSquare(sqareX, squareY, deslocamento) + ((random()%33)-16)*rugosidade;
             if (defini(sqareX, squareY, deslocamento))
             {
                 pontosDefinidos.push_back({sqareX, squareY});
             }
         }
-
+        rugosidade = rugosidade*dura;
         deslocamento = deslocamento / 2;
         if (deslocamento == 0)
             break;
@@ -233,15 +238,22 @@ void MapaAltura::criarImagem(Paleta paleta, string arq){
 Cor MapaAltura::tranformarAlturaCor(Paleta paleta, int alt){
     //da para otimizar muito 
      
-    int perto = paleta.valores[0] - alt;
-    int guardarValor = 0;
-    int val = 0;
-    for(int  i = 1; i < paleta.quantidade; i++){
-        val = paleta.valores[i] - alt;
-        if(val*val < perto*perto){
-            perto = val;
-            guardarValor = i;
+
+    int guardarValor = -1;
+  
+    for(int i = 0; i < paleta.quantidade;i++){
+        if(paleta.valores[i] == alt){
+            guardarValor = alt;
         }
+    }
+    if(alt > paleta.quantidade){
+        guardarValor = paleta.valores[paleta.quantidade-2];
+    }
+    if(alt < 0){
+        guardarValor = 2;
+    }
+    if(!(guardarValor > 1 || guardarValor < 255)){
+        guardarValor = 123;
     }
    
     return paleta.cores[guardarValor+1];

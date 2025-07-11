@@ -16,8 +16,9 @@ class MapaAltura
 {
 private:
     int tamanho;
-    int elevado; // 2^n -1 == tamanho
+    int elevado; // 2^n +1 == tamanho
     int rugosidade;
+    
 
     // funcoes auxiliares
     int mediaSquare(int x, int y, int deslocamento);
@@ -26,7 +27,10 @@ private:
 
     Cor tranformarAlturaCor(Paleta Paleta,int alt);
 
+    int aplicarRandom(int medi, int deslocamento);
+
 public:
+    int alturaMaxima;
     int **mapaComAltura;
     MapaAltura(int n, int ale)
     {

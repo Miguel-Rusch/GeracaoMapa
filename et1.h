@@ -14,8 +14,8 @@ class Cor {
 class Paleta {
     public:
     int quantidade;
-    Cor cores[100];//Armazena os tipos diferentes de cores
-    int valores[100];// Armazena os valores que se conectam com as cores
+    Cor cores[300];//Armazena os tipos diferentes de cores
+    int valores[300];// Armazena os valores que se conectam com as cores
 
     void inicializarPaleta();
     void lerCoresArquivo(string arq);
